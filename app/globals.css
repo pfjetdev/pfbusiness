@@ -1,0 +1,266 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+
+  /* Priority Flyers Brand Colors */
+  --color-pf-red: var(--pf-red);
+  --color-pf-red-light: var(--pf-red-light);
+  --color-pf-red-dark: var(--pf-red-dark);
+  --color-pf-navy: var(--pf-navy);
+  --color-pf-navy-light: var(--pf-navy-light);
+  --color-pf-ivory: var(--pf-ivory);
+  --color-pf-pearl: var(--pf-pearl);
+  --color-pf-emerald: var(--pf-emerald);
+  --color-pf-amber: var(--pf-amber);
+
+  /* shadcn mappings */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* ========================================
+     PRIORITY FLYERS BRAND COLORS
+     ======================================== */
+
+  /* Primary Accent - Priority Red */
+  --pf-red: #E01F3D;
+  --pf-red-light: #F04D66;
+  --pf-red-dark: #B8182F;
+
+  /* Secondary - Deep Navy */
+  --pf-navy: #1A2744;
+  --pf-navy-light: #2E3F5C;
+
+  /* Neutrals */
+  --pf-ivory: #FAF9F7;
+  --pf-pearl: #F5F3EF;
+  --pf-white: #FEFEFE;
+  --pf-charcoal: #1F2937;
+
+  /* Status Colors */
+  --pf-emerald: #10B981;
+  --pf-amber: #F59E0B;
+
+  /* Glassmorphism */
+  --pf-glass-white: rgba(255, 255, 255, 0.7);
+  --pf-glass-dark: rgba(26, 39, 68, 0.8);
+  --pf-glass-red: rgba(224, 31, 61, 0.15);
+
+  /* Shadows */
+  --pf-shadow-sm: 0 2px 8px rgba(26, 39, 68, 0.08);
+  --pf-shadow-md: 0 4px 20px rgba(26, 39, 68, 0.12);
+  --pf-shadow-lg: 0 8px 40px rgba(26, 39, 68, 0.16);
+  --pf-shadow-xl: 0 16px 60px rgba(26, 39, 68, 0.20);
+  --pf-shadow-red: 0 4px 30px rgba(224, 31, 61, 0.25);
+
+  /* ========================================
+     SHADCN UI THEME (mapped to PF colors)
+     ======================================== */
+
+  --background: var(--pf-ivory);
+  --foreground: var(--pf-navy);
+  --card: var(--pf-white);
+  --card-foreground: var(--pf-navy);
+  --popover: var(--pf-white);
+  --popover-foreground: var(--pf-navy);
+  --primary: var(--pf-red);
+  --primary-foreground: var(--pf-white);
+  --secondary: var(--pf-pearl);
+  --secondary-foreground: var(--pf-navy);
+  --muted: var(--pf-pearl);
+  --muted-foreground: var(--pf-navy-light);
+  --accent: var(--pf-navy);
+  --accent-foreground: var(--pf-white);
+  --destructive: var(--pf-red-dark);
+  --border: oklch(0.90 0.01 80);
+  --input: oklch(0.92 0.01 80);
+  --ring: var(--pf-red);
+  --chart-1: var(--pf-red);
+  --chart-2: var(--pf-navy);
+  --chart-3: var(--pf-emerald);
+  --chart-4: var(--pf-amber);
+  --chart-5: var(--pf-navy-light);
+  --sidebar: var(--pf-white);
+  --sidebar-foreground: var(--pf-navy);
+  --sidebar-primary: var(--pf-red);
+  --sidebar-primary-foreground: var(--pf-white);
+  --sidebar-accent: var(--pf-pearl);
+  --sidebar-accent-foreground: var(--pf-navy);
+  --sidebar-border: oklch(0.92 0.01 80);
+  --sidebar-ring: var(--pf-red);
+}
+
+.dark {
+  /* Dark mode - Navy based */
+  --background: var(--pf-navy);
+  --foreground: var(--pf-ivory);
+  --card: var(--pf-navy-light);
+  --card-foreground: var(--pf-ivory);
+  --popover: var(--pf-navy-light);
+  --popover-foreground: var(--pf-ivory);
+  --primary: var(--pf-red);
+  --primary-foreground: var(--pf-white);
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: var(--pf-ivory);
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: var(--pf-red);
+  --accent-foreground: var(--pf-white);
+  --destructive: var(--pf-red-light);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: var(--pf-red);
+  --chart-1: var(--pf-red-light);
+  --chart-2: var(--pf-emerald);
+  --chart-3: var(--pf-amber);
+  --chart-4: var(--pf-ivory);
+  --chart-5: rgba(255, 255, 255, 0.5);
+  --sidebar: var(--pf-navy);
+  --sidebar-foreground: var(--pf-ivory);
+  --sidebar-primary: var(--pf-red);
+  --sidebar-primary-foreground: var(--pf-white);
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: var(--pf-ivory);
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: var(--pf-red);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ========================================
+   PRIORITY FLYERS UTILITY CLASSES
+   ======================================== */
+
+@layer utilities {
+  /* Glassmorphism */
+  .glass {
+    background: var(--pf-glass-white);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: var(--pf-glass-dark);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-red {
+    background: var(--pf-glass-red);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(224, 31, 61, 0.2);
+  }
+
+  /* Shadows */
+  .shadow-pf-sm {
+    box-shadow: var(--pf-shadow-sm);
+  }
+
+  .shadow-pf-md {
+    box-shadow: var(--pf-shadow-md);
+  }
+
+  .shadow-pf-lg {
+    box-shadow: var(--pf-shadow-lg);
+  }
+
+  .shadow-pf-xl {
+    box-shadow: var(--pf-shadow-xl);
+  }
+
+  .shadow-pf-red {
+    box-shadow: var(--pf-shadow-red);
+  }
+
+  /* Text Gradient */
+  .text-gradient-red {
+    background: linear-gradient(135deg, var(--pf-red-dark), var(--pf-red), var(--pf-red-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Background Gradient */
+  .bg-gradient-red {
+    background: linear-gradient(135deg, var(--pf-red-dark), var(--pf-red), var(--pf-red-light));
+  }
+
+  .bg-gradient-navy {
+    background: linear-gradient(180deg, var(--pf-navy), var(--pf-navy-light));
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(135deg, var(--pf-navy) 0%, var(--pf-navy-light) 100%);
+  }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
