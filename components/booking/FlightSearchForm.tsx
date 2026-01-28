@@ -278,13 +278,30 @@ function AirportInput({ value, onChange, placeholder, onSelectionComplete, icon,
 function findCityByGeo(geoCity: string): string {
   if (!geoCity) return "";
   const lower = geoCity.toLowerCase();
-  // Exact name match
   const exact = cities.find((c) => c.name.toLowerCase() === lower);
   if (exact) return exact.code;
-  // Partial match (geo might return "New York" and we have "New York")
   const partial = cities.find((c) => c.name.toLowerCase().includes(lower) || lower.includes(c.name.toLowerCase()));
   if (partial) return partial.code;
   return "";
+}
+
+// Find nearest city by coordinates (haversine distance)
+function findCityByCoords(lat: number, lng: number): string {
+  let best = "";
+  let bestDist = Infinity;
+  for (const c of cities) {
+    const dLat = (c.lat - lat) * Math.PI / 180;
+    const dLng = (c.lng - lng) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat * Math.PI / 180) * Math.cos(c.lat * Math.PI / 180) *
+      Math.sin(dLng / 2) ** 2;
+    const d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    if (d < bestDist) {
+      bestDist = d;
+      best = c.code;
+    }
+  }
+  return best;
 }
 
 interface FlightSearchFormProps {
@@ -296,14 +313,20 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
   const [from, setFrom] = useState(() => findCityByGeo(userCity || ""));
   const [to, setTo] = useState("");
 
-  // Client-side fallback: if server geolocation didn't provide a city, use IP-based lookup
+  // Client-side fallback: if server geolocation didn't resolve, fetch geo API and use coords
   useEffect(() => {
-    if (from) return; // already resolved from server
+    if (from) return;
     fetch("/api/geo")
       .then((r) => r.json())
       .then((data) => {
+        // Try name match first
         if (data.city) {
           const code = findCityByGeo(data.city);
+          if (code) { setFrom(code); return; }
+        }
+        // Fall back to nearest city by coordinates
+        if (data.latitude && data.longitude) {
+          const code = findCityByCoords(parseFloat(data.latitude), parseFloat(data.longitude));
           if (code) setFrom(code);
         }
       })
