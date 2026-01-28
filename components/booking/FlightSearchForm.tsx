@@ -295,6 +295,20 @@ interface FlightSearchFormProps {
 export function FlightSearchForm({ userCity, userCountry: _userCountry }: FlightSearchFormProps) {
   const [from, setFrom] = useState(() => findCityByGeo(userCity || ""));
   const [to, setTo] = useState("");
+
+  // Client-side fallback: if server geolocation didn't provide a city, use IP-based lookup
+  useEffect(() => {
+    if (from) return; // already resolved from server
+    fetch("https://ipapi.co/json/")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.city) {
+          const code = findCityByGeo(data.city);
+          if (code) setFrom(code);
+        }
+      })
+      .catch(() => {});
+  }, []);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [pax, setPax] = useState<PassengerCounts>({ adults: 1, children: 0, infants: 0 });
   const [cabinClass, setCabinClass] = useState("business");
