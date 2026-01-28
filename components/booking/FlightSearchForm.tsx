@@ -299,7 +299,7 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
   // Client-side fallback: if server geolocation didn't provide a city, use IP-based lookup
   useEffect(() => {
     if (from) return; // already resolved from server
-    fetch("https://ipapi.co/json/")
+    fetch("/api/geo")
       .then((r) => r.json())
       .then((data) => {
         if (data.city) {
