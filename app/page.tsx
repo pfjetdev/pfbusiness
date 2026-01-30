@@ -5,9 +5,12 @@ import { TrustBar } from "@/components/layout/TrustBar";
 import { BestDealsSection } from "@/components/layout/BestDealsSection";
 import { AirlinesMarquee } from "@/components/layout/AirlinesMarquee";
 import { HowToBookSection } from "@/components/layout/HowToBookSection";
+import { BeatMyPriceSection } from "@/components/layout/BeatMyPriceSection";
+import { PopularDestinationsSection } from "@/components/layout/PopularDestinationsSection";
 import { WhyChooseUsSection } from "@/components/layout/WhyChooseUsSection";
 import { AirlinesSection } from "@/components/layout/AirlinesSection";
 import { BlogSection } from "@/components/layout/BlogSection";
+import { QuickLinksSection } from "@/components/layout/QuickLinksSection";
 import { Footer } from "@/components/layout/Footer";
 
 export default async function Home() {
@@ -21,11 +24,14 @@ export default async function Home() {
       <HeroSection userCity={userCity} userCountry={userCountry} />
       <TrustBar />
       <BestDealsSection />
+      <BeatMyPriceSection />
+      <PopularDestinationsSection />
       <AirlinesMarquee />
       <HowToBookSection />
       <WhyChooseUsSection />
       <AirlinesSection />
       <BlogSection />
+      <QuickLinksSection />
       <Footer />
     </>
   );

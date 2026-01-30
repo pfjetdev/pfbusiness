@@ -14,9 +14,32 @@ import {
   Twitter,
   Send,
 } from "lucide-react";
-import { Logo } from "@/components/common/Logo";
 
-const footerLinks = {
+import { Logo } from "@/components/common/Logo";
+import { fadeInUpVariants } from "@/lib/animations";
+
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}
+
+interface SocialLink {
+  icon: typeof Facebook;
+  href: string;
+  label: string;
+}
+
+interface PaymentMethod {
+  name: string;
+  src: string;
+}
+
+const FOOTER_LINKS: Record<string, FooterSection> = {
   company: {
     title: "Company",
     links: [
@@ -59,32 +82,47 @@ const footerLinks = {
   },
 };
 
-const socialLinks = [
+const SOCIAL_LINKS: SocialLink[] = [
   { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
   { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
   { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
   { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
 ];
 
-const paymentMethods = [
+const PAYMENT_METHODS: PaymentMethod[] = [
   { name: "Visa", src: "/payments/visa.svg" },
   { name: "Mastercard", src: "/payments/mastercard.svg" },
   { name: "Amex", src: "/payments/amex.svg" },
   { name: "PayPal", src: "/payments/paypal.svg" },
 ];
 
+const TRUST_BADGES = ["IATA", "ATOL", "SSL"];
+
+const LEGAL_LINKS: FooterLink[] = [
+  { label: "Terms", href: "/terms" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Cookies", href: "/cookies" },
+];
+
+const CONTACT_INFO = {
+  phone: "+1 (800) 123-4567",
+  email: "hello@priorityflyers.com",
+  address: "New York, NY 10001, USA",
+};
+
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-pf-navy text-white">
-      {/* Main Footer */}
       <div className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8">
           {/* Brand Column */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={fadeInUpVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
             className="lg:col-span-2"
           >
             <Logo variant="white" className="mb-6" />
@@ -94,10 +132,9 @@ export function Footer() {
               expert guidance.
             </p>
 
-            {/* Contact Info */}
             <div className="space-y-3">
               <a
-                href="tel:+18001234567"
+                href={`tel:${CONTACT_INFO.phone.replace(/\D/g, "")}`}
                 className="flex items-center gap-3 text-white/80 hover:text-pf-red transition-colors group"
               >
                 <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-pf-red/20 transition-colors">
@@ -105,29 +142,28 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="text-xs text-white/50">24/7 Support</p>
-                  <p className="font-semibold">+1 (800) 123-4567</p>
+                  <p className="font-semibold">{CONTACT_INFO.phone}</p>
                 </div>
               </a>
               <a
-                href="mailto:hello@priorityflyers.com"
+                href={`mailto:${CONTACT_INFO.email}`}
                 className="flex items-center gap-3 text-white/80 hover:text-pf-red transition-colors group"
               >
                 <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-pf-red/20 transition-colors">
                   <Mail className="w-4 h-4" />
                 </div>
-                <span className="text-sm">hello@priorityflyers.com</span>
+                <span className="text-sm">{CONTACT_INFO.email}</span>
               </a>
               <div className="flex items-center gap-3 text-white/60">
                 <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
                   <MapPin className="w-4 h-4" />
                 </div>
-                <span className="text-sm">New York, NY 10001, USA</span>
+                <span className="text-sm">{CONTACT_INFO.address}</span>
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="flex items-center gap-2 mt-6">
-              {socialLinks.map((social) => (
+              {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
@@ -143,13 +179,14 @@ export function Footer() {
           </motion.div>
 
           {/* Links Columns */}
-          {Object.entries(footerLinks).map(([key, section], index) => (
+          {Object.entries(FOOTER_LINKS).map(([key, section], index) => (
             <motion.div
               key={key}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={fadeInUpVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+              transition={{ delay: 0.1 * (index + 1) }}
             >
               <h4 className="font-bold text-white mb-5">{section.title}</h4>
               <ul className="space-y-3">
@@ -171,10 +208,10 @@ export function Footer() {
 
         {/* Newsletter */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeInUpVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-12 pt-10 border-t border-white/10"
         >
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -212,60 +249,51 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            {/* Copyright */}
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} Priority Flyers. All rights reserved.
+              © {currentYear} Priority Flyers. All rights reserved.
             </p>
 
-            {/* Trust Badges */}
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <div className="px-3 py-1.5 bg-white/10 rounded text-[10px] font-bold text-white/70 uppercase tracking-wider">
-                  IATA
-                </div>
-                <div className="px-3 py-1.5 bg-white/10 rounded text-[10px] font-bold text-white/70 uppercase tracking-wider">
-                  ATOL
-                </div>
-                <div className="px-3 py-1.5 bg-white/10 rounded text-[10px] font-bold text-white/70 uppercase tracking-wider">
-                  SSL
-                </div>
+                {TRUST_BADGES.map((badge) => (
+                  <div
+                    key={badge}
+                    className="px-3 py-1.5 bg-white/10 rounded text-[10px] font-bold text-white/70 uppercase tracking-wider"
+                  >
+                    {badge}
+                  </div>
+                ))}
               </div>
               <div className="h-6 w-px bg-white/20 hidden md:block" />
               <div className="flex items-center gap-3">
-                {paymentMethods.map((method) => (
+                {PAYMENT_METHODS.map((method) => (
                   <div
                     key={method.name}
-                    className="w-10 h-6 bg-white rounded flex items-center justify-center"
+                    className="w-10 h-6 bg-white rounded flex items-center justify-center overflow-hidden"
                     title={method.name}
                   >
-                    <span className="text-[8px] font-bold text-gray-600">
-                      {method.name}
-                    </span>
+                    <Image
+                      src={method.src}
+                      alt={method.name}
+                      width={32}
+                      height={20}
+                      className="object-contain"
+                    />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Legal Links */}
             <div className="flex items-center gap-4 text-sm">
-              <Link
-                href="/terms"
-                className="text-white/50 hover:text-white transition-colors"
-              >
-                Terms
-              </Link>
-              <Link
-                href="/privacy"
-                className="text-white/50 hover:text-white transition-colors"
-              >
-                Privacy
-              </Link>
-              <Link
-                href="/cookies"
-                className="text-white/50 hover:text-white transition-colors"
-              >
-                Cookies
-              </Link>
+              {LEGAL_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-white/50 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

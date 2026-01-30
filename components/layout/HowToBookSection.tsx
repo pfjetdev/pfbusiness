@@ -1,280 +1,84 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { Phone, ClipboardList, MailCheck, PlaneTakeoff, Lock, Check } from "lucide-react";
+import { motion, useInView } from "motion/react";
+import { Send, Search, Inbox, PlaneTakeoff, ArrowRight } from "lucide-react";
 
-const steps = [
+import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { EASE_OUT_EXPO, DURATION_DEFAULT } from "@/lib/animations";
+
+interface Step {
+  step: string;
+  icon: typeof Send;
+  title: string;
+  description: string;
+}
+
+const STEPS: Step[] = [
   {
     step: "01",
-    icon: Phone,
-    title: "Tell Us Your Dream Trip",
+    icon: Send,
+    title: "Share Your Trip Details",
     description:
-      "Share your travel plans with our expert advisors. We listen to every detail — dates, cabin class, airline preferences.",
+      "Fill out a quick form or message us — dates, destinations, cabin class. We'll take it from there.",
   },
   {
     step: "02",
-    icon: ClipboardList,
+    icon: Search,
     title: "We Find the Best Fares",
     description:
-      "Our team searches exclusive deals and negotiated rates to build your perfect itinerary at unbeatable prices.",
+      "Our experts search exclusive deals and negotiated rates to craft your perfect itinerary.",
   },
   {
     step: "03",
-    icon: MailCheck,
+    icon: Inbox,
     title: "Review Your Options",
     description:
-      "Receive handpicked Business & First Class options directly to your inbox, ready to compare.",
+      "Receive curated Business & First Class options directly to your inbox, ready to compare.",
   },
   {
     step: "04",
     icon: PlaneTakeoff,
     title: "Book & Take Off",
     description:
-      "Confirm your booking with secure payment and get your e-tickets instantly. Time to fly in style.",
+      "Confirm with secure payment and receive your e-tickets instantly. Time to fly in style.",
   },
 ];
 
-// Animated phone mockup showing booking flow
-function PhoneMockup() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <div ref={ref} className="relative w-[280px] h-[560px] mx-auto">
-      {/* Phone frame */}
-      <div className="absolute inset-0 rounded-[40px] bg-pf-charcoal shadow-[0_0_60px_rgba(0,0,0,0.3)] border-[8px] border-pf-charcoal overflow-hidden">
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-pf-charcoal rounded-b-2xl z-20" />
-
-        {/* Screen */}
-        <div className="relative w-full h-full bg-white rounded-[32px] overflow-hidden">
-          {/* Status bar */}
-          <div className="h-12" />
-
-          {/* Search form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="px-4 mb-3"
-          >
-            <div className="bg-pf-pearl rounded-xl p-3 space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-pf-red" />
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.6 }}
-                  className="text-[11px] font-semibold text-pf-navy"
-                >
-                  JFK · New York
-                </motion.p>
-              </div>
-              <div className="h-px bg-pf-navy/10 ml-4" />
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-pf-navy" />
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.9 }}
-                  className="text-[11px] font-semibold text-pf-navy"
-                >
-                  LHR · London
-                </motion.p>
-              </div>
-            </div>
-
-            {/* Date & class row */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.4, delay: 1.1 }}
-              className="flex gap-2 mt-2"
-            >
-              <div className="flex-1 bg-pf-pearl rounded-lg px-2.5 py-1.5">
-                <p className="text-[8px] text-pf-navy-light">Date</p>
-                <p className="text-[10px] font-semibold text-pf-navy">
-                  15 Mar
-                </p>
-              </div>
-              <div className="flex-1 bg-pf-pearl rounded-lg px-2.5 py-1.5">
-                <p className="text-[8px] text-pf-navy-light">Class</p>
-                <p className="text-[10px] font-semibold text-pf-navy">
-                  Business
-                </p>
-              </div>
-              <div className="flex-1 bg-pf-pearl rounded-lg px-2.5 py-1.5">
-                <p className="text-[8px] text-pf-navy-light">Pax</p>
-                <p className="text-[10px] font-semibold text-pf-navy">1</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Flight card 1 */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 1.5 }}
-            className="mx-4 p-3 rounded-xl border border-pf-pearl bg-white shadow-pf-sm mb-2"
-          >
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded bg-pf-pearl flex items-center justify-center">
-                  <span className="text-[6px] font-bold text-pf-navy">EK</span>
-                </div>
-                <div>
-                  <p className="text-[10px] text-pf-navy-light">
-                    Emirates · Direct
-                  </p>
-                  <p className="text-sm font-bold text-pf-navy">JFK → LHR</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[9px] text-pf-navy-light/50 line-through">
-                  $5,900
-                </p>
-                <p className="text-sm font-bold text-pf-red">$2,400</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Flight card 2 */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 1.8 }}
-            className="mx-4 p-3 rounded-xl border border-pf-pearl bg-white shadow-pf-sm mb-4"
-          >
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded bg-pf-pearl flex items-center justify-center">
-                  <span className="text-[6px] font-bold text-pf-navy">AF</span>
-                </div>
-                <div>
-                  <p className="text-[10px] text-pf-navy-light">
-                    Air France · Direct
-                  </p>
-                  <p className="text-sm font-bold text-pf-navy">LAX → CDG</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[9px] text-pf-navy-light/50 line-through">
-                  $7,800
-                </p>
-                <p className="text-sm font-bold text-pf-red">$3,100</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Book button with lock */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{
-              duration: 0.4,
-              delay: 2.3,
-              type: "spring",
-              stiffness: 200,
-            }}
-            className="mx-4"
-          >
-            <div className="bg-pf-red rounded-xl py-3 flex items-center justify-center gap-2">
-              <Lock className="w-3.5 h-3.5 text-white/80" />
-              <span className="text-white font-bold text-sm">
-                Secure Booking
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Bottom bar */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-pf-navy/20 rounded-full" />
-        </div>
-      </div>
-
-      {/* Floating: price comparison */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0, x: 20 }}
-        animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
-        transition={{ duration: 0.5, delay: 2.6, type: "spring" }}
-        className="absolute -right-14 top-20 bg-white rounded-2xl px-3.5 py-2.5 shadow-pf-lg"
-      >
-        <p className="text-[9px] text-pf-navy-light mb-0.5">Retail price</p>
-        <p className="text-xs text-pf-navy-light/50 line-through">$5,900</p>
-        <p className="text-[9px] text-pf-navy-light mt-1 mb-0.5">Your price</p>
-        <p className="text-lg font-black text-pf-red leading-none">$2,400</p>
-      </motion.div>
-
-      {/* Floating: confirmed with checkmark */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0, x: -20 }}
-        animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
-        transition={{ duration: 0.5, delay: 3.0, type: "spring" }}
-        className="absolute -left-12 bottom-28 bg-white rounded-2xl p-3 shadow-pf-lg flex items-center gap-2"
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : {}}
-          transition={{ duration: 0.3, delay: 3.3, type: "spring", stiffness: 300 }}
-          className="w-7 h-7 rounded-full bg-pf-emerald/10 flex items-center justify-center flex-shrink-0"
-        >
-          <Check className="w-4 h-4 text-pf-emerald" />
-        </motion.div>
-        <div>
-          <p className="text-[10px] text-pf-navy-light">Booking</p>
-          <p className="text-sm font-bold text-pf-navy">Confirmed</p>
-        </div>
-      </motion.div>
-    </div>
-  );
+interface StepCardProps {
+  item: Step;
+  index: number;
+  isLast: boolean;
 }
 
-function StepCard({
-  item,
-  index,
-}: {
-  item: (typeof steps)[number];
-  index: number;
-}) {
+function StepCard({ item, index, isLast }: StepCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{
         duration: 0.5,
-        delay: index * 0.15,
-        ease: [0.16, 1, 0.3, 1],
+        delay: index * 0.1,
+        ease: EASE_OUT_EXPO,
       }}
       className="group flex gap-5"
     >
-      {/* Timeline column */}
       <div className="flex flex-col items-center flex-shrink-0">
-        {/* Step circle */}
-        <div className="w-12 h-12 rounded-full border-2 border-white/12 bg-white/[0.08] flex items-center justify-center relative z-10 group-hover:bg-pf-red group-hover:border-pf-red group-hover:scale-110 transition-all duration-500">
-          <item.icon className="w-5 h-5 text-white/60 group-hover:text-white transition-colors duration-500" />
+        <div className="w-14 h-14 rounded-full bg-pf-navy flex items-center justify-center group-hover:bg-pf-red transition-colors duration-300 relative z-10">
+          <span className="text-xl font-bold text-white">{item.step}</span>
         </div>
-
-        {/* Connector line */}
-        {index < steps.length - 1 && (
-          <div className="w-[2px] flex-1 bg-white/[0.08] my-1 rounded-full min-h-[40px]" />
+        {!isLast && (
+          <div className="w-0.5 flex-1 bg-gradient-to-b from-pf-navy/30 to-pf-navy/10 min-h-[60px]" />
         )}
       </div>
 
-      {/* Content */}
-      <div className="pb-8 relative">
-        {/* Hover highlight bg */}
-        <div className="absolute -inset-4 rounded-2xl bg-white/[0.06] opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transition-all duration-400 -z-1" />
-
-        <span className="text-[11px] font-bold uppercase tracking-widest mb-2 block text-pf-red/70">
-          Step {item.step}
-        </span>
-        <h3 className="text-lg font-bold mb-2 text-white">
-          {item.title}
-        </h3>
-        <p className="text-sm leading-relaxed text-white/50">
-          {item.description}
-        </p>
+      <div className={`flex-1 pt-1 ${!isLast ? "pb-6" : ""}`}>
+        <div className="flex items-center gap-3 mb-2">
+          <item.icon className="w-5 h-5 text-pf-red" />
+          <h3 className="text-lg font-bold text-pf-navy">{item.title}</h3>
+        </div>
+        <p className="text-sm leading-relaxed text-pf-navy-light">{item.description}</p>
       </div>
     </motion.div>
   );
@@ -287,34 +91,49 @@ export function HowToBookSection() {
   return (
     <section ref={ref} className="bg-pf-ivory py-20 px-4 lg:px-8">
       <div className="container mx-auto">
-        <div className="bg-pf-navy rounded-3xl p-8 md:p-12 lg:p-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              How to <span className="text-pf-red">Book</span>
-            </h2>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto">
-              Premium travel in four simple steps.
-            </p>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: DURATION_DEFAULT }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-pf-navy mb-4">
+            How to <span className="text-pf-red">Book</span>
+          </h2>
+          <p className="text-lg text-pf-navy-light max-w-2xl mx-auto">
+            Premium travel in four simple steps.
+          </p>
+        </motion.div>
 
+        <div className="bg-white rounded-3xl p-8 md:p-12 lg:p-16 shadow-xl border border-gray-100">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Steps — vertical timeline */}
             <div className="order-2 lg:order-1">
-              {steps.map((item, i) => (
+              {STEPS.map((item, i) => (
                 <StepCard
                   key={item.step}
                   item={item}
                   index={i}
+                  isLast={i === STEPS.length - 1}
                 />
               ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="mt-8 pl-[74px]"
+              >
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 bg-pf-red hover:bg-pf-red-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-colors duration-300 shadow-lg shadow-pf-red/20 hover:shadow-xl hover:shadow-pf-red/30"
+                >
+                  Request a Quote
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </motion.div>
             </div>
 
-            {/* Phone mockup */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}

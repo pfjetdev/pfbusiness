@@ -66,9 +66,9 @@
      ======================================== */
 
   /* Primary Accent - Priority Red */
-  --pf-red: #E01F3D;
-  --pf-red-light: #F04D66;
-  --pf-red-dark: #B8182F;
+  --pf-red: #c91d44;
+  --pf-red-light: #e04466;
+  --pf-red-dark: #a11537;
 
   /* Secondary - Deep Navy */
   --pf-navy: #1A2744;
@@ -87,14 +87,14 @@
   /* Glassmorphism */
   --pf-glass-white: rgba(255, 255, 255, 0.7);
   --pf-glass-dark: rgba(26, 39, 68, 0.8);
-  --pf-glass-red: rgba(224, 31, 61, 0.15);
+  --pf-glass-red: rgba(201, 29, 68, 0.15);
 
   /* Shadows */
   --pf-shadow-sm: 0 2px 8px rgba(26, 39, 68, 0.08);
   --pf-shadow-md: 0 4px 20px rgba(26, 39, 68, 0.12);
   --pf-shadow-lg: 0 8px 40px rgba(26, 39, 68, 0.16);
   --pf-shadow-xl: 0 16px 60px rgba(26, 39, 68, 0.20);
-  --pf-shadow-red: 0 4px 30px rgba(224, 31, 61, 0.25);
+  --pf-shadow-red: 0 4px 30px rgba(201, 29, 68, 0.25);
 
   /* ========================================
      SHADCN UI THEME (mapped to PF colors)
@@ -201,7 +201,7 @@
     background: var(--pf-glass-red);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(224, 31, 61, 0.2);
+    border: 1px solid rgba(201, 29, 68, 0.2);
   }
 
   /* Shadows */

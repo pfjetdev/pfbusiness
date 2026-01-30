@@ -50,7 +50,7 @@ export function AirlinesMarquee() {
                 alt={name}
                 width={300}
                 height={100}
-                className="h-16 lg:h-20 w-auto object-contain"
+                className="h-20 lg:h-28 w-auto object-contain"
               />
             </div>
           ))}

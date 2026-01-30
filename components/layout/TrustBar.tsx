@@ -37,7 +37,7 @@ export function TrustBar() {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section ref={ref} className="bg-pf-ivory py-6">
+    <section ref={ref} className="bg-pf-navy py-6">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 lg:gap-x-16">
           {trustItems.map((item, i) => (
@@ -48,9 +48,9 @@ export function TrustBar() {
               transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-2"
             >
-              <p className="text-pf-navy font-bold text-sm lg:text-base">{item.title}</p>
-              <span className="text-pf-navy-light/40">·</span>
-              <p className="text-pf-navy-light/60 text-sm">{item.description}</p>
+              <p className="text-white font-bold text-sm lg:text-base">{item.title}</p>
+              <span className="text-white/40">·</span>
+              <p className="text-white/60 text-sm">{item.description}</p>
             </motion.div>
           ))}
         </div>

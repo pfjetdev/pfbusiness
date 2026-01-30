@@ -70,16 +70,17 @@ interface Selection {
   country: string;
 }
 
-interface AirportInputProps {
+export interface AirportInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
   onSelectionComplete?: () => void;
   icon?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
+  darkMode?: boolean;
 }
 
-function AirportInput({ value, onChange, placeholder, onSelectionComplete, icon, onOpenChange: onOpenChangeProp }: AirportInputProps) {
+export function AirportInput({ value, onChange, placeholder, onSelectionComplete, icon, onOpenChange: onOpenChangeProp, darkMode = false }: AirportInputProps) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -178,11 +179,17 @@ function AirportInput({ value, onChange, placeholder, onSelectionComplete, icon,
             onChange={handleInputChange}
             placeholder={placeholder}
             readOnly={!open && !!selection}
-            className="w-full text-base font-semibold text-pf-navy bg-transparent outline-none placeholder:text-pf-navy-light placeholder:font-normal cursor-pointer pr-8"
+            className={`w-full text-base font-semibold bg-transparent outline-none cursor-pointer pr-8 ${
+              darkMode
+                ? "text-white placeholder:text-white/50"
+                : "text-pf-navy placeholder:text-pf-navy-light"
+            } placeholder:font-normal`}
           />
           {/* Airport code badge on the right */}
           {selection && !open && (
-            <div className="absolute top-1/2 -translate-y-1/2 right-3 text-xs font-medium text-white bg-pf-navy px-1.5 py-0.5 rounded pointer-events-none">
+            <div className={`absolute top-1/2 -translate-y-1/2 right-3 text-xs font-medium px-1.5 py-0.5 rounded pointer-events-none ${
+              darkMode ? "text-pf-navy bg-white" : "text-white bg-pf-navy"
+            }`}>
               {selection.code}
             </div>
           )}
@@ -399,8 +406,8 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
             }}
             className={`px-5 py-2 text-sm font-medium rounded-full transition-all cursor-pointer ${
               tripType === t.value
-                ? "bg-pf-navy text-white shadow-sm"
-                : "text-pf-navy/60 hover:text-pf-navy hover:bg-pf-navy/5"
+                ? "bg-white text-pf-navy shadow-sm"
+                : "text-white/60 hover:text-white hover:bg-white/10"
             }`}
           >
             {t.label}
@@ -408,11 +415,11 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
         ))}
       </div>
 
-    <div className="bg-pf-navy p-4 rounded-2xl">
+    <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-4 rounded-2xl shadow-xl">
     <div className="relative">
     <div ref={formRef} className="w-full flex flex-col lg:flex-row items-stretch gap-2">
         {/* From */}
-        <div className={`flex-[2] flex items-center relative transition-all rounded-lg ${fromOpen ? "bg-white ring-2 ring-white/30" : from ? "bg-white" : "bg-white hover:bg-white"}`}>
+        <div className={`flex-[2] flex items-center relative transition-all rounded-lg ${fromOpen ? "bg-white ring-2 ring-white/50" : from ? "bg-white" : "bg-white/90 hover:bg-white"}`}>
           <AirportInput
             value={from}
             onChange={setFrom}
@@ -425,22 +432,22 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
 
         {/* Swap Button + Divider */}
         <div className="hidden lg:flex items-center relative">
-          <div className="w-px h-full bg-gray-300" />
+          <div className="w-px h-full bg-white/30" />
           <button
             type="button"
             onClick={handleSwap}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-pf-navy border border-white/20 rounded-full flex items-center justify-center hover:bg-pf-navy-light hover:border-pf-red transition-colors shadow-sm"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-white/50 rounded-full flex items-center justify-center hover:bg-pf-red hover:border-pf-red transition-colors shadow-sm group"
             aria-label="Swap destinations"
           >
             <ArrowLeftRight
-              className="w-4 h-4 text-white transition-transform duration-300"
+              className="w-4 h-4 text-pf-navy group-hover:text-white transition-transform duration-300"
               style={{ transform: `rotate(${swapRotation}deg)` }}
             />
           </button>
         </div>
 
         {/* To */}
-        <div ref={toInputRef} className={`flex-[2] flex items-center relative transition-all rounded-lg ${toOpen ? "bg-white ring-2 ring-white/30" : to ? "bg-white" : "bg-white hover:bg-white"}`}>
+        <div ref={toInputRef} className={`flex-[2] flex items-center relative transition-all rounded-lg ${toOpen ? "bg-white ring-2 ring-white/50" : to ? "bg-white" : "bg-white/90 hover:bg-white"}`}>
           <AirportInput
             value={to}
             onChange={setTo}
@@ -452,12 +459,12 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
         </div>
 
         {/* Divider */}
-        <div className="hidden lg:block w-px bg-gray-300" />
+        <div className="hidden lg:block w-px bg-white/30" />
 
         {/* Date Range Trigger */}
         <div
           onClick={() => setDatesOpen(!datesOpen)}
-          className={`flex-[2] flex items-center transition-all rounded-lg cursor-pointer ${datesOpen ? "bg-white ring-2 ring-white/30" : (dateRange?.from || dateRange?.to) ? "bg-white" : "bg-white hover:bg-white"}`}
+          className={`flex-[2] flex items-center transition-all rounded-lg cursor-pointer ${datesOpen ? "bg-white ring-2 ring-white/50" : (dateRange?.from || dateRange?.to) ? "bg-white" : "bg-white/90 hover:bg-white"}`}
         >
           <button className="flex-1 flex items-center gap-2 px-4 py-3 text-left cursor-pointer">
             <Calendar className="w-4 h-4 text-pf-red shrink-0" />
@@ -467,7 +474,7 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
           </button>
           {tripType === "round" && (
             <>
-              <div className="w-px h-6 bg-gray-300" />
+              <div className="w-px h-6 bg-pf-navy/20" />
               <button className="flex-1 flex items-center gap-2 px-4 py-3 text-left cursor-pointer">
                 <Calendar className="w-4 h-4 text-pf-red shrink-0" />
                 <span className="text-base font-medium text-pf-navy">
@@ -479,12 +486,12 @@ export function FlightSearchForm({ userCity, userCountry: _userCountry }: Flight
         </div>
 
         {/* Divider */}
-        <div className="hidden lg:block w-px bg-gray-300" />
+        <div className="hidden lg:block w-px bg-white/30" />
 
         {/* Passengers & Class */}
         <Popover open={passengersOpen} onOpenChange={setPassengersOpen}>
           <PopoverTrigger asChild>
-            <button className={`flex-1 flex items-center gap-2 px-4 py-3 text-left transition-all rounded-lg cursor-pointer ${passengersOpen ? "bg-white ring-2 ring-white/30" : "bg-white hover:bg-white"}`}>
+            <button className={`flex-1 flex items-center gap-2 px-4 py-3 text-left transition-all rounded-lg cursor-pointer ${passengersOpen ? "bg-white ring-2 ring-white/50" : "bg-white/90 hover:bg-white"}`}>
               <Users className="w-4 h-4 text-pf-red shrink-0" />
               <div className="flex flex-col leading-tight whitespace-nowrap flex-1">
                 <span className="text-sm font-medium text-pf-navy">{totalPassengers} {totalPassengers === 1 ? "passenger" : "passengers"}</span>
